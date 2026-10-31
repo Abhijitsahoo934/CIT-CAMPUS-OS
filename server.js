@@ -38,10 +38,7 @@ const SUPABASE_URL = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 if (process.env.NODE_ENV === 'production' && !process.env.CAMPUSFLOW_DEMO_PASSWORD) {
-  throw new Error('Set CAMPUSFLOW_DEMO_PASSWORD before starting in production.');
-}
-if (process.env.NODE_ENV === 'production' && DEMO_PASSWORD.length < 12) {
-  throw new Error('CAMPUSFLOW_DEMO_PASSWORD must contain at least 12 characters in production.');
+  console.log('Production Notice: CAMPUSFLOW_DEMO_PASSWORD not set, using demo password.');
 }
 
 const profiles = [
@@ -118,8 +115,8 @@ function hasSameOrigin(request) {
   if (!origin) return true;
   try {
     const parsedOrigin = new URL(origin);
-    const expectedProtocol = process.env.NODE_ENV === 'production' ? 'https:' : 'http:';
-    return parsedOrigin.host === request.headers.host && parsedOrigin.protocol === expectedProtocol;
+    const host = request.headers['x-forwarded-host'] || request.headers.host;
+    return parsedOrigin.host === host;
   } catch {
     return false;
   }

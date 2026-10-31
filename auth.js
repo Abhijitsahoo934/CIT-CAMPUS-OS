@@ -49,9 +49,19 @@
       }
       throw error;
     }
-    const body = await response.json();
+    const rawText = await response.text();
+    let body = {};
+    try {
+      body = rawText ? JSON.parse(rawText) : {};
+    } catch {
+      if (!response.ok) {
+        const error = new Error(rawText || 'Server error (' + response.status + ')');
+        error.status = response.status;
+        throw error;
+      }
+    }
     if (!response.ok) {
-      const error = new Error(body.error || 'The request could not be completed.');
+      const error = new Error(body.error || rawText || 'The request could not be completed.');
       error.status = response.status;
       throw error;
     }
