@@ -403,13 +403,13 @@ function serveStatic(response, pathname) {
   });
 }
 
-function createAppServer(options = {}) {
+function createRequestHandler(options = {}) {
   const supabaseConfig = {
     url: options.supabaseUrl || SUPABASE_URL,
     serviceRoleKey: options.supabaseServiceRoleKey || SUPABASE_SERVICE_ROLE_KEY,
     fetch: options.fetch
   };
-  return http.createServer((request, response) => {
+  return (request, response) => {
     let pathname;
     try {
       pathname = new URL(request.url, `http://${request.headers.host || 'localhost'}`).pathname;
@@ -425,13 +425,13 @@ function createAppServer(options = {}) {
           return;
         }
         sendJson(response, error.statusCode || 500, {
-            error: error.statusCode === 400 || error.statusCode === 413 || error.statusCode === 503
-              ? error.message
-              : error.supabaseMessage
-                ? `Supabase database error${error.supabaseCode ? ` (${error.supabaseCode})` : ''}: ${error.supabaseMessage}`
+          error: error.statusCode === 400 || error.statusCode === 413 || error.statusCode === 503
+            ? error.message
+            : error.supabaseMessage
+              ? `Supabase database error${error.supabaseCode ? ` (${error.supabaseCode})` : ''}: ${error.supabaseMessage}`
               : 'The server could not complete the request.'
-          });
-          if (!error.statusCode || error.statusCode === 502) console.error('API request failed:', error);
+        });
+        if (!error.statusCode || error.statusCode === 502) console.error('API request failed:', error);
       });
       return;
     }
@@ -442,7 +442,12 @@ function createAppServer(options = {}) {
       return;
     }
     serveStatic(response, pathname);
-  });
+  };
+}
+
+function createAppServer(options = {}) {
+  const handler = createRequestHandler(options);
+  return http.createServer(handler);
 }
 
 if (require.main === module) {
@@ -457,4 +462,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { createAppServer };
+module.exports = { createAppServer, createRequestHandler, handleApi };

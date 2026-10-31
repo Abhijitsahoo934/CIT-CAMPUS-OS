@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/cit_campusflow_one_campus_one_schedule_zero_conflicts.html", "destination": "/index.html" }
+  ]
+}
