@@ -1,0 +1,94 @@
+:root {
+      --color-navy: #172554;
+      --color-indigo: #6366F1;
+      --color-blue: #3B82F6;
+      --color-bg: #F8FAFC;
+      --color-surface: #FFFFFF;
+      --color-text: #0F172A;
+      --color-muted: #64748B;
+      --color-border: #E2E8F0;
+      --color-success: #16A34A;
+      --color-warning: #F59E0B;
+      --color-danger: #DC2626;
+      --color-info: #2563EB;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      -webkit-font-smoothing: antialiased;
+    }
+    .dark body {
+      background-color: #0B1120;
+      color: #F8FAFC;
+    }
+    /* Custom thin scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; }
+    /* Timetable session cards */
+    .session-lecture {
+      background-color: #EEF2FF;
+      border-left: 3px solid #6366F1;
+      color: #1E1B4B;
+    }
+    .dark .session-lecture {
+      background-color: rgba(99, 102, 241, 0.16);
+      border-left: 3px solid #818CF8;
+      color: #E0E7FF;
+    }
+    .session-tutorial {
+      background-color: #ECFEFF;
+      border-left: 3px solid #0891B2;
+      color: #164E63;
+    }
+    .dark .session-tutorial {
+      background-color: rgba(8, 145, 178, 0.16);
+      border-left: 3px solid #22D3EE;
+      color: #CFFAFE;
+    }
+    .session-lab {
+      background-color: #FEF3C7;
+      border-left: 3px solid #D97706;
+      color: #78350F;
+    }
+    .dark .session-lab {
+      background-color: rgba(217, 119, 6, 0.18);
+      border-left: 3px solid #FBBF24;
+      color: #FEF3C7;
+    }
+    .session-event {
+      background-color: #F0FDF4;
+      border-left: 3px solid #16A34A;
+      color: #14532D;
+    }
+    .dark .session-event {
+      background-color: rgba(22, 163, 74, 0.18);
+      border-left: 3px solid #4ADE80;
+      color: #DCFCE7;
+    }
+    .lunch-stripe {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(241, 245, 249, 0.7),
+        rgba(241, 245, 249, 0.7) 8px,
+        rgba(226, 232, 240, 0.45) 8px,
+        rgba(226, 232, 240, 0.45) 16px
+      );
+    }
+    .dark .lunch-stripe {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(30, 41, 59, 0.6),
+        rgba(30, 41, 59, 0.6) 8px,
+        rgba(15, 23, 42, 0.6) 8px,
+        rgba(15, 23, 42, 0.6) 16px
+      );
+    }
+    @media print {
+      #app-sidebar, #app-topbar, .no-print { display: none !important; }
+      #main-scroll { overflow: visible !important; padding: 0 !important; }
+      body { background: #fff !important; color: #000 !important; }
+    }
