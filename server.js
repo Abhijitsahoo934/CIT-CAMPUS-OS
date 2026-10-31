@@ -367,6 +367,7 @@ async function handleApi(request, response, pathname, supabaseConfig) {
 
 const staticFiles = new Map([
   ['/', ['cit_campusflow_one_campus_one_schedule_zero_conflicts.html', 'text/html; charset=utf-8']],
+  ['/index.html', ['cit_campusflow_one_campus_one_schedule_zero_conflicts.html', 'text/html; charset=utf-8']],
   ['/cit_campusflow_one_campus_one_schedule_zero_conflicts.html', ['cit_campusflow_one_campus_one_schedule_zero_conflicts.html', 'text/html; charset=utf-8']],
   ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
   ['/tailwind-config.js', ['tailwind-config.js', 'text/javascript; charset=utf-8']],
@@ -421,7 +422,7 @@ function createAppServer(options = {}) {
       handleApi(request, response, pathname, supabaseConfig).catch(error => {
         if (response.headersSent) {
           response.destroy(error);
-        return;
+          return;
         }
         sendJson(response, error.statusCode || 500, {
             error: error.statusCode === 400 || error.statusCode === 413 || error.statusCode === 503
